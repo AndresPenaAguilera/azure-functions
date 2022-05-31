@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace azure_functions
+namespace azure_functions.Http_trigger
 {
-    public static class Http_trigger
+    public static class Http_trigger2
     {
         [FunctionName("Http_trigger")]
         public static async Task<IActionResult> Run(
