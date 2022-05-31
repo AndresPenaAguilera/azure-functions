@@ -14,25 +14,23 @@ namespace azure_functions.Http_trigger
     public static class EmailSender
     {
         [FunctionName("EmailSender")]
-        public static async Task<IActionResult> Run(
+        public static IActionResult Run(
 
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "emails")]
                 Email email,
             
-            [SendGrid(ApiKey ="SendGridApiKey")]
-                IAsyncCollector<SendGridMessage> collector,
+            [SendGrid(ApiKey ="SendGridApiKey",
+                      From ="p.andres01@hotmail.com", 
+                      Subject = "{ Subject }",
+                      To = "{ To }",
+                      Text = "{ Body }"
+            )]
+                out SendGridMessage sendGridMessage,
 
             ILogger log 
         )
         {
-
-            var sendGridMessage = new SendGridMessage();
-            sendGridMessage.SetFrom("p.andres01@hotmail.com");
-            sendGridMessage.AddTo(email.To);
-            sendGridMessage.AddContent("text/html", email.Body);
-            sendGridMessage.SetSubject(email.Subject);
-
-            collector.AddAsync(sendGridMessage);
+            sendGridMessage = new SendGridMessage();
 
             return new OkObjectResult("Email sent to { to }");
         }
