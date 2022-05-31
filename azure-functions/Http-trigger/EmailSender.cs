@@ -17,7 +17,7 @@ namespace azure_functions.Http_trigger
         public static async Task<IActionResult> Run(
 
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]
-                HttpRequest req,
+                Email email,
             
             [SendGrid(ApiKey ="SendGridApiKey")]
                 IAsyncCollector<SendGridMessage> collector,
@@ -25,10 +25,6 @@ namespace azure_functions.Http_trigger
             ILogger log 
         )
         {
-
-            using var streamReader = new StreamReader( req.Body );
-            var content =  await streamReader.ReadToEndAsync();
-            var email = JsonConvert.DeserializeObject<Email>(content);
 
             var sendGridMessage = new SendGridMessage();
             sendGridMessage.SetFrom("p.andres01@hotmail.com");
