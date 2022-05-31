@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using SendGrid.Helpers.Mail;
 using Newtonsoft.Json;
 
-namespace azure_functions.Http_trigger
+namespace azure_functions.EmailSender
 {
     public static class EmailSender
     {
